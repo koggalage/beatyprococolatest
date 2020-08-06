@@ -1,0 +1,67 @@
+<!-- main content area -->
+<div id="wrapper-content">
+
+  <!-- start: filter section -->
+  <div id="filter-section">
+
+    <div *ngIf="isSuperUser" class="form-group">
+      <select class="form-control select" (change)="onDepartmentChange($event)">
+        <option value="" disabled selected>Select departmnet</option>
+        <option value="{{department.departmentId}}" *ngFor="let department of departments">{{department.name}}
+        </option>
+        <option value="0">All</option>
+      </select>
+    </div>
+
+    <button *ngIf="isSuperUser" type="button" class="btn-default" (click)="addEditTreatment(null)">Add new
+      treatment</button>
+  </div>
+
+  <!-- start: table section -->
+  <div class="table-gen treatment-list">
+
+    <!-- start: table header -->
+    <div class="table-header">
+
+      <div class="row">
+        <div>Treatment name</div>
+        <div>Department</div>
+        <div>Duration</div>
+        <div>Cost</div>
+        <div>Price</div>
+        <div></div>
+      </div>
+    </div>
+    <!-- end: table header -->
+
+    <!-- start: table body -->
+    <div id="table-body">
+      <div class="table-row">
+        <div class="row" *ngFor="let treatment of treatmentList">
+          <div>{{treatment.ttname}}</div>
+          <div>{{treatment.department}}</div>
+          <div>{{treatment.duration}}</div>
+          <div>{{treatment.price | currency : 'MVR'}}</div>
+          <div>{{treatment.cost | currency : 'MVR'}}</div>
+          <div *ngIf="isSuperUser" class="action-btns align-right">
+            <!-- <button class="icon-btn">
+              <i class="material-icons">pageview</i>
+            </button> -->
+            <button class="icon-btn">
+              <i class="material-icons" (click)='addEditTreatment(treatment)'>edit</i>
+            </button>
+            <button class="icon-btn" (click)="delete(treatment)">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- end: table body -->
+
+  </div>
+  <!-- end: table section -->
+
+</div>
+<!-- end: main wrapper -->

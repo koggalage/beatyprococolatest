@@ -1,0 +1,304 @@
+<div id="wrapper-content">
+
+  <!-- start: filter section -->
+  <div id="filter-section">
+    <div class="form-group" *ngIf="isSuperUser">
+      <select class="form-control select" (change)="onDepartmentChange($event)" [(ngModel)]='selectedDepartment'>
+        <option value="" disabled selected>Select departmnet</option>
+        <option value="{{department.departmentId}}" *ngFor="let department of departments">{{department.name}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <div class="ng-autocomplete">
+        <ng-autocomplete [(ngModel)]="selectedCustomerfullName" [data]="customers" [searchKeyword]="keyword"
+          placeHolder="Enter Customer Name" (selected)='selectCustomerEvent($event)' [itemTemplate]="itemTemplate1"
+          [notFoundTemplate]="notFoundTemplate">
+        </ng-autocomplete>
+
+        <ng-template #itemTemplate1 let-item>
+          <a [innerHTML]="item.fullName"></a>
+        </ng-template>
+
+        <ng-template #notFoundTemplate let-notFound>
+          <div [innerHTML]="notFound"></div>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+
+  <!--Header part-->
+  <div>
+    <div class="tt-sm">Invoice</div>
+
+    <!-- start: treatment table section -->
+    <div class="table-gen client-list">
+      <!-- start: treatment table header -->
+      <div class="table-header">
+        <div class="row">
+          <div> Treatment </div>
+          <div> Price </div>
+          <div> QTY </div>
+          <div> Amount </div>
+          <div> Therapist Name </div>
+        </div>
+      </div>
+      <!-- start: treatment table body -->
+      <div id="table-body">
+        <div class="table-row">
+          <div class="row" *ngFor="let treatment of invoiceableTreatment; index as i">
+            <div> {{treatment.treatmentName}} </div>
+            <!-- <div> {{i + 1}} {{treatment.treatmentName}} </div> -->
+            <div> {{treatment.price | currency : 'MVR'}} </div>
+            <div> {{treatment.quantity}} </div>
+            <div> {{treatment.amount | currency : 'MVR'}} </div>
+            <div> {{treatment.employeeName}} </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="il-f-submit-btn">
+    <button (click)='addDiscount()' class="btn-default">Add Discount</button>
+  </div>
+
+  <!-- start: treatment total section -->
+  <div class="checkout-total checkout-total-block">
+    <div class="total-label">Treatments <br></div>
+    <div class="checkout-total-row">
+      <div class="total-label"> Sub Total </div>
+      <div class="total-amount">{{treatmentSubTotal | currency : 'MVR'}}</div>
+    </div>
+    <div class="checkout-total-row">
+      <div class="total-label"> Discount </div>
+      <div class="total-amount"> {{treatmentsDiscountAmount | currency : 'MVR'}} </div>
+    </div>
+    <div class="checkout-total-row">
+      <div class="total-label"> Net Amount </div>
+      <div class="total-amount"> {{treatmentNetAmount | currency : 'MVR'}} </div>
+    </div>
+    <div class="checkout-total-row">
+      <div class="total-label"> Tax 6% </div>
+      <div class="total-amount"> {{treatmentsTaxAmount | currency : 'MVR'}} </div>
+    </div>
+    <div class="checkout-total-row">
+      <div class="total-label"> Due Amount </div>
+      <div class="total-amount"> {{treatmentDueAmount | currency : 'MVR'}} </div>
+    </div>
+  </div>
+
+  <!-- start: product table section -->
+  <div>
+    <form name="form" (ngSubmit)="addProduct(f.form.valid)" #f="ngForm" novalidate>
+      <div class="inline-form add-prd-form">
+        <div class="form-group">
+          <label>Product</label>
+          <div class="ng-autocomplete">
+
+            <ng-autocomplete #auto [data]="products" [searchKeyword]="keywordProduct" placeHolder="Enter Product Name"
+              (selected)='selectProductEvent($event)' [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate" required [(ngModel)]="productName" name='productName'>
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.itemName"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate2 let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+
+            <div *ngIf="f.submitted && isProductNotSelected">
+              <div class="error-msg">Product Name is required</div>
+            </div>
+
+            <!-- <div *ngIf="f.submitted && isProductNotDuplicated">
+              <div class="error-msg">Product is already added</div>
+            </div> -->
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>QTY</label>
+          <input type="number" min="1" class="form-control" name="qty" (input)="onQtyChange($event)"
+            placeholder="Quantity..." [(ngModel)]='newInvoiceableProduct.quantity' required />
+          <div *ngIf="f.submitted && isNotValidQty">
+            <div class="error-msg">Invalid quantity</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Therapist Recommend</label>
+          <div class="ng-autocomplete">
+
+            <ng-autocomplete #auto [data]="employeesList" [searchKeyword]="keywordEmployee" name="recomendedByName"
+              placeHolder="Enter Employee Name" (selected)='selectEmployeeEvent($event)' [itemTemplate]="itemTemplate2"
+              [notFoundTemplate]="notFoundTemplate2" [(ngModel)]="therapistName" required>
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate2 let-item>
+              <a [innerHTML]="item.name"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate2 let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+
+            <div *ngIf="f.submitted && isEmployeeNotSelected">
+              <div class="error-msg">Employee Name is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="il-f-submit-btn">
+          <button type="submit" class="btn-default">Add</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="table-gen client-list">
+    <div class="table-header">
+      <div class="row">
+        <div>Product </div>
+        <div> Price </div>
+        <div> QTY </div>
+        <div> Amount </div>
+        <div> Recommended By </div>
+        <div> </div>
+      </div>
+    </div>
+
+    <!-- start: product table body -->
+    <div id="table-body">
+      <div class="table-row">
+        <div class="row" id="product{{i}}" *ngFor="let product of invoiceableProduct;let i=index">
+          <div id="productName{{i}}"> {{product.productName}} </div>
+          <div id="productPrice{{i}}"> {{product.price | currency : 'MVR'}} </div>
+          <div id="productQuantity{{i}}"> {{product.quantity}} </div>
+          <div id="productAmount{{i}}"> {{product?.price * product.quantity | currency : 'MVR'}} </div>
+          <div id="productRec{{i}}"> {{product.recomendedByName}} </div>
+          <div>
+            <button class="icon-btn" (click)="removeProduct(i)">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- start: product table total section -->
+  <div class="checkout-total checkout-total-block">
+    <div class="total-label">Products</div>
+    <div class="checkout-total-row">
+      <div class="total-label"> Sub Total </div>
+      <div class="total-amount"> {{productSubTotal | currency : 'MVR'}} </div>
+    </div>
+    <div class="checkout-total-row">
+      <div class="total-label"> Tax 6% </div>
+      <div class="total-amount"> {{productsTaxAmount | currency : 'MVR'}} </div>
+    </div>
+    <div class="checkout-total-row">
+      <div class="total-label"> Due Amount </div>
+      <div class="total-amount"> {{productDueAmount | currency : 'MVR'}} </div>
+    </div>
+  </div>
+
+  <!--start Sub Total section-->
+  <div class="checkout-total checkout-total-block">
+    <div class="checkout-total-row">
+      <div class="total-label"> Grand Sub Total </div>
+      <div class="total-amount"> {{treatmentSubTotal + productSubTotal | currency : 'MVR'}} </div>
+    </div>
+    <div class="checkout-total-row">
+      <div class="total-label"> Treatment Discount</div>
+      <div class="total-amount"> {{treatmentsDiscountAmount | currency : 'MVR'}} </div>
+    </div>
+    <div class="checkout-total-row">
+      <div class="total-label">Grand Net Amount </div>
+      <div class="total-amount"> {{treatmentNetAmount + productSubTotal | currency : 'MVR'}} </div>
+    </div>
+    <div class="checkout-total-row">
+      <div class="total-label">Total Tax 6% </div>
+      <div class="total-amount"> {{treatmentsTaxAmount + productsTaxAmount | currency : 'MVR'}} </div>
+    </div>
+    <div class="checkout-total-row">
+      <div class="total-label">Grand Due Total </div>
+      <div class="total-amount"> {{treatmentDueAmount + productDueAmount | currency : 'MVR'}} </div>
+    </div>
+  </div>
+  <div class="il-f-submit-btn">
+    <div class="inline-form add-prd-form">
+      <div class="form-group">
+
+        <label>Payment Type</label>
+        <select class="form-control select" name="paymentType" required (change)="onPaymentTypeChange($event)"
+          [(ngModel)]="invoiceSaveRequest.ptid">
+          <option value="" disabled selected>Select Payment Type</option>
+          <option value={{paymentType.ptid}} *ngFor="let paymentType of paymentTypes">{{paymentType.ptname}}
+          </option>
+        </select>
+
+        <div *ngIf="f.submitted && isPaymentTypeNotSelected">
+          <div class="error-msg">Payment Type is required</div>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label>Card Type</label>
+        <select class="form-control select" [disabled]="!isCardPayment || isPaymentTypeNotSelected"
+          [required]="invoiceSaveRequest.ptid!=1" [(ngModel)]="invoiceSaveRequest.transType" name="transType"
+          id="transType">
+          <option value="Visa">Visa</option>
+          <option value="Master">Master</option>
+          <option value="AMEX">AMEX</option>
+        </select>
+
+        <div
+          *ngIf="f.submitted && !isPaymentTypeNotSelected && invoiceSaveRequest.ptid!=1 && invoiceSaveRequest.transType==null">
+          <div class="error-msg">Transaction Type is required</div>
+        </div>
+      </div>
+
+      <div class="form-group" style="padding-top: 17px">
+        <div class="ng-autocomplete">
+          <ng-autocomplete [data]="voucherList" [searchKeyword]="keywordVoucher" placeHolder="Enter Voucher Number"
+            [(ngModel)]="selectedVoucher" (selected)='selectVoucherEvent($event)' [itemTemplate]="itemTemplate12"
+            [notFoundTemplate]="notFoundTemplate12">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate12 let-item>
+            <a [innerHTML]="item.voucherNo"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate12 let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Voucher Due Asmount</label>
+        <input type="number" class="form-control" name="voucherDueAmount" placeholder="Voucher Due Asmount..."
+          [(ngModel)]='voucherDueAmount' disabled readonly />
+      </div>
+
+      <div class="form-group">
+        <label>Voucher Sub Total</label>
+        <input type="number" class="form-control" name="voucherSubTotalAmount" placeholder="Voucher Sub Total..."
+          [(ngModel)]='gVRedeemedAmount' />
+      </div>
+
+      <div class="il-f-submit-btn">
+        <button (click)='saveInvoice()' class="btn-default">Save Invoice</button>
+      </div>
+    </div>
+  </div>
+
+</div>

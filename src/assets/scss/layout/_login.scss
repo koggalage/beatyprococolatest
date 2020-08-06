@@ -1,0 +1,40 @@
+.login-ct {
+    display: flex;
+    padding: 40px;
+    align-items: center;
+    height: 100%;
+
+    .error-msg {
+        margin-bottom: 20px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+}
+
+.login-form {
+    flex: 0 0 40%;
+
+    form {
+        padding-right: 40px;
+    }
+}
+
+.login-img {
+    flex: 0 0 60%;
+    height: 100%;
+
+    img {
+        height: 100%;
+    }
+}
+
+.login-title {
+    font-size: 1.5rem;
+    color: $color-2;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.logn-btn {
+    width: 160px;
+}

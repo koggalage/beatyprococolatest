@@ -1,0 +1,80 @@
+/*---------- Starting  Styles ----------*/
+.menu-toggle-btn {
+  position: fixed;
+  top: 15px;
+  z-index: 5;
+  left: 20px;
+
+  &.icon-close {
+    .menu-close { display: none; }
+    .menu-open { display: block; }
+  }
+
+  &.icon-open {
+    .menu-close { display: block; }
+    .menu-open { display: none; }
+  }
+}
+
+
+.sidebar{
+  // position: fixed;
+  // width: 260px;
+  // height: 100%;
+  // top: 70px;
+  // z-index: 1;
+  // min-height: 100%;
+  // display: block;
+  // box-sizing: border-box;
+  // left: 0;
+  // overflow: hidden;
+  @include transition(display, 0.3s, ease-in);
+
+  &.sb-open {
+    display: block;
+    @include transition(display, 0.3s, ease-in);
+  }
+
+  &.sb-close {
+    display: none;
+    @include transition(display, 0.3s, ease-in);
+  }
+
+  .panel-nav {
+    width: 240px;
+    padding-left: 40px;
+    margin-top: 40px;
+    overflow: auto;
+
+    .main-menu {
+      background: #342a34;
+      padding: 15px 0;
+      border-radius: 10px;
+      @include box-shadow(0, 1px, 1px, rgba(0, 0, 0, 0.22));
+
+      ul {
+        height: auto;
+
+        li {
+          padding-left: 30px;
+          color: #fff2ec;
+          display: block;
+          position: relative;
+          overflow: hidden;
+          height: 50px;
+          line-height: 50px;
+          font-size: 13px;
+          font-family: 'Gotham';
+          font-weight: 600;
+          cursor: pointer;
+          @include transition(all 0.3s ease-in-out);
+
+          &:hover {
+            background: #b7b9b7;
+            color: #342a34;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+<div class="pop-up">
+  <div class="pop-up-header">
+    <div class="pop-up-title">Add Discount</div>
+    <button class="icon-btn" (click)="dialogRef.close()">
+      <i class="material-icons">close</i>
+    </button>
+  </div>
+  <div class="pop-up-body">
+    <form name="form" (ngSubmit)="discountForm.form.valid && submit()" #discountForm="ngForm" novalidate>
+      <div class="form-group">
+        <label>Discount %</label>
+        <input type='number' class="form-control" required name="discount" [(ngModel)]="discountRequest.discount"
+          #discount="ngModel" placeholder="Enter discount..." />
+        <div *ngIf="discountForm.submitted && discount.invalid">
+          <div class="error-msg" *ngIf="discount.errors.required">Discount is required</div>
+        </div>
+      </div>
+
+      <div *ngIf="!isSuperUser" class="form-group">
+        <label>Username</label>
+        <input class="form-control" required name="username" [(ngModel)]="discountRequest.user" #username="ngModel"
+          placeholder="Enter Username..." />
+        <div *ngIf="discountForm.submitted && username.invalid">
+          <div class="error-msg" *ngIf="username.errors.required">Username is required</div>
+        </div>
+      </div>
+
+      <div *ngIf="!isSuperUser" class="form-group">
+        <label>Password</label>
+        <input type='password' class="form-control" required name="otp" [(ngModel)]="discountRequest.otp" #otp="ngModel"
+          placeholder="Enter Password..." />
+        <div *ngIf="discountForm.submitted && otp.invalid">
+          <div class="error-msg" *ngIf="otp.errors.required">Password is required</div>
+        </div>
+      </div>
+
+      <div class="pop-up-btns">
+        <button type="button" class="btn-primary" (click)="dialogRef.close()">Cancel</button>
+        <button type="submit" class="btn-default">Submit</button>
+      </div>
+
+    </form>
+  </div>
+</div>

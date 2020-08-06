@@ -1,0 +1,66 @@
+.ng-autocomplete {
+    width: auto !important;
+}
+  
+.autocomplete-container {
+    box-shadow: none !important;
+    height: 36px !important;
+    
+    .input-container input {
+        height: 36px !important;
+        padding: 0 15px !important;
+        font-size: 13px !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: $color-2 !important;
+        line-height: 36px !important;
+        border: 1px solid $color-2 !important;
+        background: $white;
+        border-radius: 10px;
+        position: relative;
+    }
+  
+    .suggestions-container {
+        ul {
+            overflow: hidden !important;
+        }
+    }
+}
+
+.mat-form-field-flex {
+    border: 1px solid $color-2 !important;
+    height: 36px !important;
+    border-radius: 10px;
+    display: flex !important;
+    align-items: center !important;
+    background: $white !important;
+}
+
+.mat-form-field-infix {
+    width: auto !important;
+    border-top: none !important;
+    padding: 11px 15px !important;
+    font-size: 13px !important;
+    line-height: 0 !important;
+    height: 34px !important;
+}
+
+.mat-form-field-wrapper {
+    padding: 0 !important;
+}
+
+.mat-form-field-underline {
+    display: none !important;
+}
+
+.mat-form-field-suffix .mat-icon {
+    font-size: 120% !important;
+    line-height: 1.5 !important;
+    margin-right: 10px !important;
+}
+
+.mat-dialog-container {
+    // padding: 0 !important;
+    // overflow: hidden !important;
+}

@@ -1,0 +1,33 @@
+.user-profile {
+    padding: 40px 0 15px;
+}
+
+.up-b {
+    display: flex;
+    align-items: center;
+    color: $color-1;
+    font-size: 17px;
+    line-height: 44px;
+    letter-spacing: 0.03em;
+
+    span {
+        color: $color-2;
+        display: block;
+        width: 120px;
+        position: relative;
+        text-transform: uppercase;
+        font-size: 12px;
+
+        &::before {
+            content: ':';
+            position: absolute;
+            display: block;
+            right: 10px;
+        }
+    }
+
+    button {
+        margin-left: 50px;
+    }
+}
+

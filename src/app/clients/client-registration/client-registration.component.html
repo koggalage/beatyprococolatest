@@ -1,0 +1,90 @@
+<div class="pop-up">
+
+  <div class="pop-up-header">
+
+    <div [hidden]='isEdit' class="pop-up-title">Client Registration</div>
+    <div [hidden]='!isEdit' class="pop-up-title">Client Update</div>
+
+    <button type="button" class="icon-btn" (click)="dialogRef.close()">
+      <i class="material-icons">close</i>
+    </button>
+
+  </div>
+
+  <form (ngSubmit)="f.form.valid && save()" #f="ngForm" novalidate>
+
+    <div class="pop-up-body">
+
+      <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" name="fullName" required [(ngModel)]="client.name" #fullName="ngModel"
+          placeholder="Client name..." />
+
+        <div *ngIf="f.submitted && fullName.invalid">
+          <div class="error-msg" *ngIf="fullName.errors.required">Full Name is required</div>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label>Address</label>
+        <input class="form-control" name="address" [(ngModel)]="client.address" #address="ngModel"
+          placeholder="Address..." />
+        <!-- <div *ngIf="f.submitted && address.invalid">
+          <div class="error-msg" *ngIf="address.errors.required">Address is required</div>
+        </div> -->
+      </div>
+
+      <div class="inline-form">
+        <div class="form-group">
+          <label>Contact No</label>
+          <input class="form-control" name="mobileNo" required [(ngModel)]="client.contactNo" #mobileNo="ngModel"
+            placeholder="Contact no" />
+          <div *ngIf="f.submitted && mobileNo.invalid">
+            <div class="error-msg" *ngIf="mobileNo.errors.required">Contact no is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>E-mail</label>
+          <input class="form-control" name="email" required type="email" [(ngModel)]="client.email" #email="ngModel"
+            placeholder="e-mail" email />
+
+          <div *ngIf="f.submitted && email.invalid">
+            <div class="error-msg" *ngIf="email.errors.required">Email is required</div>
+            <div class="error-msg" *ngIf="email.errors.email">Email is Invalid</div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <div class="inline-form">
+
+        <div class="form-group">
+          <label>Gender</label>
+          <select class="form-control select" (change)="onGenderChange($event)">
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Loyalty Card No</label>
+          <input class="form-control" name="loyaltyCardNo" [(ngModel)]="client.loyaltyCardNo"
+            placeholder="Enter no..." />
+        </div>
+
+      </div>
+    </div>
+
+    <div class="pop-up-btns">
+      <button type="button" class="btn-primary" (click)="cancel()">Cancel</button>
+      <button [hidden]='isEdit' [disabled]='isEdit' type="submit" class="btn-default">Save Client</button>
+      <button [hidden]='!isEdit' [disabled]='!isEdit' type="submit" class="btn-default">Update Client</button>
+    </div>
+
+  </form>
+
+</div>

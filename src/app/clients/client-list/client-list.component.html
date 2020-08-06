@@ -1,0 +1,61 @@
+<div id="wrapper-content">
+
+  <!-- start: filter section -->
+  <div id="filter-section">
+    <div class="form-group search">
+      <i class="material-icons">search</i>
+      <input type="search" [(ngModel)]="searchText" #searchInput class="form-control" autocomplete="off"
+        autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </div>
+
+    <button type="button" class="btn-default" (click)="addEditClient(null)">Add new client</button>
+  </div>
+
+  <!-- start: table section -->
+  <div class="table-gen client-list">
+
+    <!-- start: table header -->
+    <div class="table-header">
+
+      <div class="row">
+        <div>Name</div>
+        <div>Address</div>
+        <div>Mobile No</div>
+        <div>E-mail</div>
+        <div>Gender</div>
+        <!-- <div>Profession</div> -->
+        <div>Loyalty Card No</div>
+        <div></div>
+      </div>
+    </div>
+    <!-- end: table header -->
+
+    <!-- start: table body -->
+    <div id="table-body">
+      <div class="table-row">
+        <div class="row" *ngFor="let customer of customers">
+          <div>{{customer.fullName}}</div>
+          <div>{{customer.address}}</div>
+          <div>{{customer.mobileNo}}</div>
+          <div>{{customer.email}}</div>
+          <div>{{customer.gender}}</div>
+          <!-- <div>{{customer.profession}}</div> -->
+          <div>{{customer.loyaltyCardNo}}</div>
+          <div class="action-btns align-right">
+            <button class="icon-btn">
+              <i class="material-icons" (click)="addEditClient(customer)">edit</i>
+            </button>
+            <button class="icon-btn" (click)="delete(customer)">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- end: table body -->
+
+  </div>
+  <!-- end: table section -->
+
+</div>

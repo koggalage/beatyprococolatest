@@ -1,0 +1,31 @@
+<header>
+  <div class="logo">
+    {{companyName}}
+  </div>
+
+  <div class="header-main">
+
+    <div class="title">{{module | titlecase}}</div>
+
+    <div class="header-right">
+
+      <div class="logged-in-user">
+        <div class="username">
+          <span>welcome</span><br>
+          {{loggedInUser()}}
+        </div>
+        <img class="icon" src="./assets/img/user-icon.svg" alt="user-icon">
+
+        <i class="material-icons" (click)="toggle = !toggle">
+          arrow_drop_down
+        </i>
+        <ul *ngIf="toggle" class="os-dropdown">
+          <li>Profile</li>
+          <li (click)="logout()">Logout</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+</header>

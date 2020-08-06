@@ -1,0 +1,13 @@
+#table-body select {
+    &[ng-reflect-model=Issued] {
+        background: #ffd400 !important;
+    }
+
+    &[ng-reflect-model=Redeemed] {
+        background: #60fa65 !important;
+    }
+
+    &[ng-reflect-model=Cancelled] {
+        background: #ff9e9e !important;
+    }
+}

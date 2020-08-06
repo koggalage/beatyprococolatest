@@ -1,0 +1,84 @@
+<div id="wrapper-content">
+
+  <!-- start: filter section -->
+  <div id="filter-section">
+
+    <div *ngIf="isSuperUser" class="form-group">
+      <select class="form-control select" (change)="onDepartmentChange($event)">
+        <option value="" disabled selected>Select departmnet</option>
+        <option value="{{department.departmentId}}" *ngFor="let department of departments">{{department.name}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+
+      <mat-form-field>
+        <!-- [min]="minDate" -->
+        <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" [(ngModel)]="date" name="picker"
+          placeholder="Choose a date">
+
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker [startAt]="date" #picker></mat-datepicker>
+
+      </mat-form-field>
+
+    </div>
+
+    <div class="form-group">
+      <select class="form-control select" [(ngModel)]="status" (change)="loadInvoices()">
+        <option value=1>Invoiced</option>
+        <option value=2>Amended</option>
+        <option value=3>Cancelled</option>
+        <option value=4>All</option>
+      </select>
+    </div>
+
+  </div>
+
+  <!-- start: table section -->
+  <div class="table-gen appointment-list">
+
+    <!-- start: table header -->
+    <div class="table-header">
+
+      <div class="row">
+        <div>Invoice No</div>
+        <div>Customer</div>
+        <div>Date</div>
+        <div>Tax</div>
+        <div>Sub Total</div>
+        <div>Discount</div>
+        <div>Due Amount</div>
+        <div></div>
+      </div>
+    </div>
+    <!-- end: table header -->
+
+    <!-- start: table body -->
+    <div id="table-body">
+      <div class="table-row">
+        <div class="row" *ngFor="let invoice of invoiceList">
+          <div (click)="viewInvoice(invoice)">{{invoice.invoiceNo}}</div>
+          <div>{{invoice.customerFullName}}</div>
+          <div>{{invoice.invoiceDate}}</div>
+          <div>{{invoice.tax }}</div>
+          <div>{{invoice.subTotal}}</div>
+          <div>{{invoice.discount}}</div>
+          <div>{{invoice.dueAmount | currency : 'MVR'}}</div>
+          <div class="action-btns align-right" (click)="cancelInvoice(invoice)">
+            <button class="icon-btn">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- end: table body -->
+
+  </div>
+  <!-- end: table section -->
+
+</div>
+<!-- end: main wrapper -->

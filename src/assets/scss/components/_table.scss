@@ -1,0 +1,137 @@
+/*--------General Table----------*/
+.table-gen {
+
+  .table-header, .table-row {
+
+    .row {
+      width: 100%;
+      height: 50px;
+      display: table;
+      table-layout:fixed;
+      // border-bottom: 1px solid $border-color;
+      padding: 0 10px;
+
+      div {
+        display: table-cell;
+        text-align: left;
+        box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        list-style: none;
+        font-family: 'Gotham-Book';
+        padding: 0 10px;
+        vertical-align: middle;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .table-header {
+
+    .row {
+      height: 50px;
+
+      div {
+        font-size: 12px;
+        font-weight: 600;
+        color: $color-2;
+        vertical-align: bottom;
+        padding-bottom: 10px;
+      }
+    }
+  }
+
+  #table-body {
+    .table-row {
+
+      .row {
+        @include transition(all .25s ease-in-out);
+        background: $white;
+        @include box-shadow(0, 1px, 1px, rgba(0, 0, 0, 0.22));
+        border-radius: 10px;
+        border: 1px solid $white;
+        margin-bottom: 12px;
+
+        div {
+          color: $black;
+          font-size: 13px;
+
+          &.action-btns button {
+            opacity: 0;
+            @include transition(all .25s ease-in-out);
+          }
+
+          .form-control {
+            height: 24px;
+            padding: 0 10px;
+            font-size: 12px;
+            // background: #2a2a2a;
+            color: $black;
+            border-radius: 15px;
+            width: auto;
+            border: none;
+
+            option {
+              background: #eee;
+              color: #2a2a2a;
+            }
+          }
+        }
+
+        &:hover {
+          @include box-shadow(0, 1px, 4px, rgba(0, 0, 0, 0.22));
+          border-color: $color-2;
+
+          div.action-btns button {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* treatment listing */
+.table-gen.treatment-list {
+  .table-header, .table-row {
+    .row {
+      div {
+        @include list-columns(32%, 17%, 17%, 17%, 17%, 150px);
+      }
+    }
+  }
+}
+
+/* voucher listing */
+.table-gen.voucher-list {
+  .table-header, .table-row {
+    .row {
+      div {
+        @include list-columns(15%, 25%, 15%, 15%, 13%, 17%, 100px);
+      }
+    }
+  }
+}
+
+/* appointment lisitng */
+.table-gen.appointment-list {
+  .table-header, .table-row {
+    .row {
+      div {
+        @include list-columns(15%, 15%, 14%, 13%, 14%, 14%, 15%, 140px);
+      }
+    }
+  }
+}
+
+/* client lisitng */
+.table-gen.client-list {
+  .table-header, .table-row {
+    .row {
+      div {
+        @include list-columns(13%, 20%, 12%, 17%, 10%, 12%, 14%, 110px);
+      }
+    }
+  }
+}

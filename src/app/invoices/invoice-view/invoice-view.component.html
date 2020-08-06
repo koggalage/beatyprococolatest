@@ -1,0 +1,75 @@
+<div class="pop-up">
+  <div class="pop-up-header">
+    <div class="pop-up-title">Invoice</div>
+    <button type="button" class="icon-btn" (click)="dialogRef.close()">
+      <i class="material-icons">close</i>
+    </button>
+  </div>
+
+  <form name="form" #f="ngForm" novalidate>
+    <div class="pop-up-body">
+      <div class="inline-form">
+        <div class="form-group">
+          <label>Invoice No</label>
+          <input type="text" class="form-control" disabled [(ngModel)]="invoice.invoiceNo" name="invoiceNo">
+        </div>
+        <div class="form-group">
+          <label>Customer</label>
+          <input type="text" class="form-control" disabled [(ngModel)]="invoice.customerFullName" name="customer">
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+
+          <mat-form-field>
+            <!-- [(ngModel)]="invoice.date" -->
+            <input matInput disabled [matDatepicker]="picker" [(ngModel)]="invoiceDate"
+              [(ngModel)]="invoice.invoiceDate" name="date" name="picker" placeholder="Choose a date">
+
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="inline-form">
+        <div class="form-group">
+          <label>Products</label>
+
+          <div class="label-area">
+            <label class="form-control" style="padding-left: 15px;"
+              *ngFor="let product of invoice.invoiceProducts;let i=index">{{i+1}}. {{product.productName}}
+              - {{product.price}}</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Treatments</label>
+          <div class="label-area">
+            <label class="form-control" style="padding-left: 15px;"
+              *ngFor="let treatment of invoice.invoiceTreatments;let i=index">{{i+1}}.
+              {{treatment.treatmentTypeName}} - {{treatment.price}}</label>
+          </div>
+        </div>
+      </div>
+      <div class="inline-form">
+        <div class="form-group">
+          <label>Tax</label>
+          <input type="text" disabled class="form-control" [(ngModel)]="invoice.tax" name="tax">
+        </div>
+        <div class="form-group">
+          <label>Discount</label>
+          <input type="text" disabled class="form-control" [(ngModel)]="invoice.discount" name="discount">
+        </div>
+      </div>
+      <div class="inline-form">
+        <div class="form-group">
+          <label>Due Amount</label>
+          <input type="text" class="form-control" disabled [(ngModel)]="invoice.dueAmount" name="dueAmount">
+        </div>
+        <div class="form-group">
+          <label>Sub Total</label>
+          <input type="text" class="form-control" disabled [(ngModel)]="invoice.subTotal" name="subTotal">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

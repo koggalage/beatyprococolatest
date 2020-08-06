@@ -1,0 +1,65 @@
+<div class="schd-blc-usr">
+
+  <div class="schd-blc-usr-img">
+    <img src="./assets/img/user.png" alt="">
+  </div>
+
+  <div class="schd-blc-usr-name">
+    {{scheduleResponse.employeeName}}
+    <span>{{scheduleResponse.designation}}</span>
+  </div>
+
+</div>
+
+<div class="schd-blc-tl">
+
+  <ng-container *ngFor="let timeIndex of scheduleResponse.timeIndexes; index as i">
+
+    <ng-container *ngIf="timeIndex != 'default'">
+
+      <ng-container *ngFor="let schedule of scheduleResponse.schedules">
+
+        <!-- start: detailed div -->
+        <ng-container *ngIf="i === schedule.startIndex">
+
+          <!-- <div class="tooltip" [ngClass]="{'confirmed': schedule.scheduleStatus == 'Confirmed'}"> -->
+          <div class="tooltip"
+            [ngClass]="[schedule.scheduleStatus == 'Confirmed' ? 'confirmed' : '', schedule.scheduleStatus == 'Invoiced' ? 'invoiced' : '' ]">
+
+            <span class="tooltiptext">
+              <span class="t-bold">Client:</span> {{schedule.clientName}} <br>
+              <span class="t-bold">Status:</span> {{schedule.scheduleStatus}} <br>
+              <span class="t-bold">Treatment:</span> {{schedule.treatmentType}} <br>
+              <span class="t-bold">Start Time:</span> {{schedule.startTime}} <br>
+              <span class="t-bold">End Time:</span> {{schedule.endTime}} <br>
+            </span>
+
+            <div [ngStyle]="{'background-color':schedule.colorCode}" class="bk-seg-name"
+              (click)="addEditAppointment(i, schedule)">
+              {{schedule.clientName}} <span class="bk-seg-trt">{{schedule.treatmentType}}</span></div>
+
+          </div>
+
+        </ng-container>
+        <!-- end: detailed div -->
+
+
+        <!-- start: appoinment duration div -->
+        <ng-container *ngIf="i > schedule.startIndex && i < schedule.endIndex ">
+          <div [ngStyle]="{'background-color':schedule.colorCode}" class="bk-seg"
+            [ngClass]="[schedule.scheduleStatus == 'Confirmed' ? 'confirmed' : '', schedule.scheduleStatus == 'Invoiced' ? 'invoiced' : '' ]">
+          </div>
+        </ng-container>
+        <!-- end: appoinment duration div -->
+
+      </ng-container>
+
+    </ng-container>
+
+
+    <!-- start: empty div -->
+    <div (click)="addEditAppointment(i, null)" class="tl-gap-seg index-{{i}}"></div>
+    <!-- end: empty div -->
+  </ng-container>
+
+</div>

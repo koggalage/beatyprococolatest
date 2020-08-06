@@ -1,0 +1,86 @@
+{
+  "shedules": [
+    {
+      "employeeName": "Nayanai",
+      "designation": "Cashier",
+      "schedules": [
+        {
+          "clientName": "Priyalal liyanarachchi",
+          "scheduleStatus": "New",
+          "treatmentType": "test1treatment",
+          "startTime": "08:15:00",
+          "endTime": "08:20:00"
+        },
+        {
+          "clientName": "dhanushka liyanarachchi",
+          "scheduleStatus": "New",
+          "treatmentType": "test1treatment",
+          "startTime": "09:00:00",
+          "endTime": "09:20:00"
+        },
+        {
+          "clientName": "dhanushka liyanarachchi",
+          "scheduleStatus": "New",
+          "treatmentType": "test1treatment",
+          "startTime": "10:00:00",
+          "endTime": "10:20:00"
+        },
+        {
+          "clientName": "dhanushka liyanarachchi",
+          "scheduleStatus": "New",
+          "treatmentType": "test1treatment",
+          "startTime": "14:00:00",
+          "endTime": "14:45:00"
+        },
+        {
+          "clientName": "dhanushka liyanarachchi",
+          "scheduleStatus": "New",
+          "treatmentType": "test1treatment",
+          "startTime": "15:00:00",
+          "endTime": "15:55:00"
+        }
+      ]
+    },
+    {
+      "employeeName": "Bindula",
+      "designation": "Chakablas",
+      "schedules": [
+        {
+          "clientName": "Suresh liyanarachchi",
+          "scheduleStatus": "New",
+          "treatmentType": "test1treatment",
+          "startTime": "08:00:00",
+          "endTime": "08:45:00"
+        },
+        {
+          "clientName": "Koggala liyanarachchi",
+          "scheduleStatus": "Old",
+          "treatmentType": "test1treatment",
+          "startTime": "09:30:00",
+          "endTime": "09:45:00"
+        },
+        {
+          "clientName": "Suresh liyanarachchi",
+          "scheduleStatus": "New",
+          "treatmentType": "test1treatment",
+          "startTime": "12:00:00",
+          "endTime": "13:45:00"
+        },
+        {
+          "clientName": "Chandika liyanarachchi",
+          "scheduleStatus": "New",
+          "treatmentType": "test1treatment",
+          "startTime": "14:00:00",
+          "endTime": "14:30:00"
+        },
+        {
+          "clientName": "Amila liyanarachchi",
+          "scheduleStatus": "New",
+          "treatmentType": "test1treatment",
+          "startTime": "14:35:00",
+          "endTime": "15:05:00"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+<div id="wrapper-content">
+
+  <!-- start: filter section -->
+  <div id="filter-section">
+    <div *ngIf="isSuperUser" class="form-group">
+      <select class="form-control select" (change)="onDepartmentChange($event)">
+        <option value="" disabled selected>Select departmnet</option>
+        <option value="{{department.departmentId}}" *ngFor="let department of departments">{{department.name}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+
+      <mat-form-field>
+
+        <!-- [min]="minDate" -->
+        <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" [(ngModel)]="date" name="picker"
+          placeholder="Choose a date">
+
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker [startAt]="date" #picker></mat-datepicker>
+
+      </mat-form-field>
+
+    </div>
+    <div class="form-group">
+      <select class="form-control select" (change)="onStatusChange($event)">
+        <option value="1" selected>All</option>
+        <option value="2">Issued</option>
+        <option value="3">Redeemed</option>
+        <option value="4">Cancelled</option>
+      </select>
+    </div>
+
+    <button type="button" class="btn-default" (click)="addNewVoucher(null)">Issue New Voucher</button>
+  </div>
+
+  <!-- start: table section -->
+  <div class="table-gen voucher-list">
+
+    <!-- start: table header -->
+    <div class="table-header">
+
+      <div class="row">
+        <div>Voucher No</div>
+        <div>Customer</div>
+        <div>Issued By</div>
+        <div>Issued Date</div>
+        <div>Status</div>
+        <div>Amount</div>
+        <div></div>
+      </div>
+    </div>
+    <!-- end: table header -->
+
+    <!-- start: table body -->
+    <div id="table-body">
+      <div class="table-row">
+        <div class="row" *ngFor="let voucher of voucherList">
+          <div>{{voucher.voucherNo}}</div>
+          <div>{{voucher.customerName}}</div>
+          <div>{{voucher.issuedBy}}</div>
+          <div>{{voucher.enteredDate | date}}</div>
+          <div>
+            <!-- name="status{{i}}" -->
+            <select [(ngModel)]="voucher.status" name="status" class="form-control select"
+              (change)='onStatusEdit($event, voucher)'>
+              <option value="{{status}}" *ngFor="let status of voucherEditStatusList">{{status}}
+              </option>
+            </select>
+          </div>
+          <div>{{voucher.dueAmount | currency : 'MVR'}}</div>
+          <div class="action-btns align-right">
+            <button class="icon-btn">
+              <i class="material-icons" (click)='addNewVoucher(voucher)'>edit</i>
+            </button>
+            <button class="icon-btn" (click)="deleteVoucher(voucher)">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- end: table body -->
+
+  </div>
+  <!-- end: table section -->
+
+</div>
+<!-- end: main wrapper -->

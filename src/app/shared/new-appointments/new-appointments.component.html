@@ -1,0 +1,173 @@
+<div class="pop-up" style="width: 700px;">
+  <div class="pop-up-header">
+    <div class="pop-up-title">{{ data.isEdit ? 'Edit' : 'New' }} Appointment</div>
+    <button class="icon-btn" (click)="cancel()">
+      <i class="material-icons">close</i>
+    </button>
+  </div>
+
+  <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" novalidate>
+
+    <div class="pop-up-body">
+      <div class="form-group">
+
+        <label>Customer</label>
+        <div class="ng-autocomplete">
+
+          <ng-autocomplete [disabled]="data.isEdit" [initialValue]="initialValueCustomer" [data]="customers"
+            [searchKeyword]="keyword" placeHolder="Enter Customer Name" (selected)='selectCustomerEvent($event)'
+            [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.fullName"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+
+          <div *ngIf="f.submitted && isCustomerNotSelected">
+            <div class="error-msg">Customer Name is required</div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="add-appointment-blc">
+
+        <div class="inline-form f-wrap">
+
+          <div class="form-group w-1/3">
+            <label>Treatment</label>
+            <div class="ng-autocomplete">
+
+              <ng-autocomplete [initialValue]="initialValueTreatment" #autoTreatment [data]="treatmentList"
+                [searchKeyword]="keywordTreatment" placeHolder="Enter Treatment Name"
+                (selected)='selectTreatmentEvent($event)' [itemTemplate]="itemTemplate1"
+                [notFoundTemplate]="notFoundTemplate1">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate1 let-item>
+                <a [innerHTML]="item.ttname"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate1 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+
+              <div *ngIf="f.submitted && isTreatmentNotSelected">
+                <div class="error-msg">Treatment is required</div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="form-group w-1/3">
+
+            <label>Quantity</label>
+            <input type="number" class="form-control" name="qty" [(ngModel)]="treatmentQty"
+              (keypress)="numericOnly($event)" (input)="onQtyChange($event)" placeholder="Quantity..." />
+
+          </div>
+
+          <div class="form-group w-1/3">
+
+            <label>Employee</label>
+            <input type="text" class="form-control" name="empName" [(ngModel)]="data.scheduleResponse.employeeName"
+              readonly disabled />
+
+          </div>
+
+          <!-- <div class="form-group w-1/3" *ngIf="this.data.isEdit">
+
+            <label>Employee</label>
+            <div class="ng-autocomplete">
+
+              <ng-autocomplete #auto [initialValue]="initialValueEmployee" [data]="employeesList"
+                [searchKeyword]="keywordEmployee" placeHolder="Enter Employee Name"
+                (selected)='onEmployeeSelect($event)' [itemTemplate]="itemTemplate2"
+                [notFoundTemplate]="notFoundTemplate2">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate2 let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate2 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+
+              <div *ngIf="f.submitted && isEmployeeNotSelected">
+                <div class="error-msg">Employee Name is required</div>
+              </div>
+
+            </div>
+
+          </div> -->
+
+          <div class="form-group w-1/3">
+            <label>Date</label>
+
+            <input class="form-control" type="text" id="date" name="date" [(ngModel)]="initdate" readonly disabled>
+
+          </div>
+
+          <div class="form-group w-1/3">
+            <label>Start Time</label>
+            <material-timepicker color="primary" label="Hour 2" [userTime]="exportTime" (change)="onChangeHour($event)"
+              revertLabel="Remove" submitLabel="Ok">
+            </material-timepicker>
+
+            <div *ngIf="f.submitted && isStartTimeNotSelected">
+              <div class="error-msg">Appoinment Start Time is required</div>
+            </div>
+
+            <div *ngIf="f.submitted && isStartTimeInvalid">
+              <div class="error-msg">Appoinment Start Time is earlier than the openning time</div>
+            </div>
+
+            <div *ngIf="f.submitted && isTimeInvalid">
+              <div class="error-msg">An Appoinment already exist for this time slot</div>
+            </div>
+
+          </div>
+
+          <div class="form-group w-1/3">
+            <label>End Time</label>
+            <material-timepicker color="primary" label="Hour 2" [userTime]="exportEndTime" revertLabel="Remove"
+              submitLabel="Ok"></material-timepicker>
+
+            <div *ngIf="f.submitted && isEndTimeInvalid">
+              <div class="error-msg">Appoinment End Time is later than the openning time</div>
+            </div>
+
+          </div>
+
+          <div class="form-group w-1/3" *ngIf="data.isEdit">
+            <label>Status</label>
+            <select class="form-control select" (change)="onStatusChange($event)">
+              <!-- <option value="" disabled selected>Status</option> -->
+              <option value="{{status}}" *ngFor="let status of appointmentStatus"
+                [selected]="status === selectedStatus">{{status}}
+              </option>
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="pop-up-btns">
+      <button type="button" class="btn-primary" (click)="cancel()">Cancel</button>
+      <button type="submit" class="btn-default">Save Appointment</button>
+    </div>
+
+  </form>
+
+</div>

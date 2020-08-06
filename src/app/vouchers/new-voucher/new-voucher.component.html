@@ -1,0 +1,132 @@
+<div class="pop-up">
+  <div class="pop-up-header">
+    <div class="pop-up-title" *ngIf="!editMode">New Voucher</div>
+    <div class="pop-up-title" *ngIf="editMode">Update Voucher</div>
+    <button type="button" class="icon-btn" (click)="dialogRef.close()">
+      <i class="material-icons">close</i>
+    </button>
+  </div>
+
+  <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" novalidate>
+
+    <div class="pop-up-body">
+
+      <div class="form-group">
+        <label>Customer</label>
+        <div class="ng-autocomplete">
+
+          <ng-autocomplete [data]="customers" [searchKeyword]="keyword" placeHolder="Enter Customer Name"
+            (selected)='selectCustomerEvent($event)' name="customerName" [(ngModel)]="customerName"
+            [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" required>
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.fullName"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+
+        </div>
+
+      </div>
+
+      <div class="form-group" *ngIf="isSuperUser">
+        <label>Department</label>
+        <select class="form-control select" name="department" [(ngModel)]="newVoucherRequest.departmentId">
+          <option value="" disabled selected>Select departmnet</option>
+          <option value={{department.departmentId}} *ngFor="let department of departments">{{department.name}}
+          </option>
+        </select>
+      </div>
+
+
+      <div class="inline-form">
+        <div class="form-group">
+
+          <label>Payment Type</label>
+          <select class="form-control select" name="paymentType" required (change)="onPaymentTypeChange($event)"
+            [(ngModel)]="newVoucherRequest.ptid">
+            <option value="" disabled selected>Select Payment Type</option>
+            <option value={{paymentType.ptid}} *ngFor="let paymentType of paymentTypes">{{paymentType.ptname}}
+            </option>
+          </select>
+
+          <div *ngIf="f.submitted && isPaymentTypeNotSelected">
+            <div class="error-msg">Payment Type is required</div>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label>Transaction Type</label>
+          <select class="form-control select" [disabled]="newVoucherRequest.ptid==1"
+            [required]="newVoucherRequest.ptid!=1" [(ngModel)]="newVoucherRequest.transType" name="transType"
+            id="transType">
+            <option value="Visa">Visa</option>
+            <option value="Master">Master</option>
+            <option value="AMEX">AMEX</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Treatment</label>
+        <div class="ng-autocomplete">
+
+          <ng-autocomplete [data]="treatmentList" name="treatment" required [searchKeyword]="keywordTreatment"
+            placeHolder="Enter Treatment Name" (selected)='selectTreatmentEvent($event)' [(ngModel)]="treatment"
+            [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate1 let-item>
+            <a [innerHTML]="item.ttname"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate1 let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+
+        </div>
+
+      </div>
+
+      <div class="inline-form">
+
+        <div class="form-group">
+          <label>Voucher No</label>
+          <input class="form-control" name="voucherNo" required [(ngModel)]="newVoucherRequest.voucherNo"
+            #voucherNo="ngModel" [ngClass]="{ 'is-invalid': f.submitted && voucherNo.invalid }"
+            placeholder="Voucher no..." />
+
+          <div *ngIf="f.submitted && voucherNo.invalid">
+            <div class="error-msg" *ngIf="voucherNo.errors.required">Voucher No is required</div>
+          </div>
+
+        </div>
+
+        <div class="form-group form-amnt">
+          <label>Amount</label>
+          <span class="form-prefix">MVR</span>
+          <input class="form-control" name="dueAmount" [(ngModel)]="newVoucherRequest.dueAmount" #dueAmount="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && dueAmount.invalid }" (keypress)="numericOnly($event)" required
+            placeholder="0.00" />
+
+          <div *ngIf="f.submitted && dueAmount.invalid">
+            <div class="error-msg" *ngIf="dueAmount.errors.required">Amount is required</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="pop-up-btns">
+      <button class="btn-primary" (click)="cancel()">Cancel</button>
+      <button class="btn-default" *ngIf="!editMode">Save</button>
+      <button class="btn-default" *ngIf="editMode">Update</button>
+    </div>
+
+  </form>
+
+</div>

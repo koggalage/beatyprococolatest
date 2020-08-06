@@ -1,0 +1,21 @@
+<app-header></app-header>
+<div class="main-c">
+  <!-- start: sidebar -->
+  <button class="icon-btn menu-toggle-btn" (click)="sbtoggle = !sbtoggle" [ngClass]="sbtoggle ? 'icon-close' : 'icon-open' ">
+    <i class="material-icons menu-open">menu</i>
+    <i class="material-icons menu-close">fullscreen_exit</i>
+  </button>
+  <nav class="sidebar" [ngClass]="sbtoggle ? 'sb-close' : 'sb-open' ">
+    <div class="panel-nav">
+      <div class="main-menu">
+        <ul>
+          <li *ngFor="let item of modules" [routerLink]="[item]" routerLinkActive="router-link-active">
+            {{item | titlecase}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- end: sidebar -->
+  <router-outlet></router-outlet>
+</div>

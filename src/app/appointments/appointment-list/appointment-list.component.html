@@ -1,0 +1,84 @@
+<div id="wrapper-content">
+
+  <!-- start: filter section -->
+  <div id="filter-section">
+    <div *ngIf="isSuperUser" class="form-group">
+      <select class="form-control select" (change)="onDepartmentChange($event)">
+        <option value="" disabled selected>Select departmnet</option>
+        <option value="{{department.departmentId}}" *ngFor="let department of departments">{{department.name}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+
+      <mat-form-field>
+        <!-- [min]="minDate" -->
+        <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" [(ngModel)]="date" name="picker"
+          placeholder="Choose a date">
+
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker [startAt]="date" #picker></mat-datepicker>
+
+      </mat-form-field>
+
+    </div>
+    <div class="form-group">
+      <select class="form-control select" (change)="onStatusChange($event)" [(ngModel)]="status">
+        <option value=1>Pending</option>
+        <option value=2>Confirmed</option>
+        <option value=3>Cancelled</option>
+        <option value=4>All</option>
+      </select>
+    </div>
+    <!-- <button type="button" class="btn-default" (click)="addEditAppointment(null)">Add new appointment</button> -->
+  </div>
+
+  <!-- start: table section -->
+  <div class="table-gen appointment-list">
+
+    <!-- start: table header -->
+    <div class="table-header">
+
+      <div class="row">
+        <div>Client</div>
+        <div>Treatment</div>
+        <div>Booked Date</div>
+        <div>Time</div>
+        <div>Duration</div>
+        <div>Therapist</div>
+        <div>Price</div>
+        <div>Status</div>
+      </div>
+    </div>
+    <!-- end: table header -->
+
+    <!-- start: table body -->
+    <div id="table-body">
+      <div class="table-row">
+        <div class="row" *ngFor="let appointment of appointmentList;let i=index">
+          <div>{{appointment.client}}</div>
+          <div>{{appointment.treatment}}</div>
+          <div>{{appointment.date | date}}</div>
+          <div>{{appointment.time }}</div>
+          <div>{{appointment.duration}}</div>
+          <div>{{appointment.therapist}}</div>
+          <div>{{appointment.price | currency : 'MVR'}}</div>
+          <div>
+            <span class="ap-status" [class.confirmed-color]="appointment.status=='Confirmed'"
+              [class.cancelled-color]="appointment.status=='Cancelled'"
+              [class.pending-color]="appointment.status=='Pending'">
+              {{appointment.status}}
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- end: table body -->
+
+  </div>
+  <!-- end: table section -->
+
+</div>
+<!-- end: main wrapper -->
